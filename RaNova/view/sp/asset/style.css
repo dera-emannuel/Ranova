@@ -1,0 +1,928 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+:root {
+    --hover-color: #1F8ACD;
+    --WHITE: #ededed;
+    --text-col: #3d3c3c;
+    --nav-col: #fff;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    /* border-bottom: 1px solid rgb(141, 141, 141); */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background: var(--nav-col);
+}
+
+header nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.menu {
+    display: none;
+}
+
+
+header nav .logo img {
+    width: 80px;
+    height: 80px;
+}
+
+.notHolder {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.spproholder {
+    background: #fff;
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 15px;
+    border: 1px solid rgba(7, 152, 241, 0.15);
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.notHolder .spimg img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.notIcon {
+    background: var(--hover-color);
+    padding: 10px;
+    border-radius: 100%;
+    color: var(--WHITE);
+}
+
+.trashIcon {
+    color: var(--WHITE);
+    background: #6d6d6da4;
+    padding: 10px;
+    border-radius: 100%;
+}
+
+.dashboardWrapper {
+    display: flex;
+    width: 100%;
+    margin-top: 80px;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+/* ============================
+    sidebar===============
+=============================*/
+
+.sidebar {
+    width: 250px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    background: var(--hover-color);
+    position: fixed;
+    left: 0;
+    top: 70px;
+    z-index: 999;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 10px;
+}
+
+.sidebarLink {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: var(--WHITE);
+    border-radius: 8px 0px 0px 8px;
+    transition: .3s;
+}
+
+.sidebarLink:hover {
+    background: var(--nav-col);
+    color: var(--text-col);
+}
+
+.sidebarLink span {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.sidebarLink i {
+    font-size: 22px;
+}
+
+.logout {
+    margin-top: 30px;
+}
+
+
+
+/* ========================
+PRELOADER STYLE
+=======================*/
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+
+#preloader .loader {
+    text-align: center;
+}
+
+#preloader .pulse {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--hover-color);
+    animation: pulse 1.5s infinite ease-in-out;
+    margin: 0 auto 15px;
+}
+
+#preloader p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: 1px;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+}
+
+/* ======================main content=============== */
+.contentArea {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    padding: 20px;
+    overflow-y: auto;
+    background: var(--bg-col);
+    scrollbar-width: none;
+}
+
+@media (max-width: 750px) {
+    .sidebar {
+        position: absolute;
+        transform: translateX(-100%);
+        transition: .2s ease-in-out;
+        height: 90vh;
+    }
+
+    .sidebar.add {
+        transform: translateX(0%);
+        width: 100% !important;
+        margin-left: 0 !important;
+        transition: .2s ease-in-out;
+    }
+
+    .logout {
+        margin-top: 10px;
+    }
+
+    .contentArea {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .menu i {
+        font-size: 30px;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .notIcon,
+    .trashIcon,
+    .dah {
+        display: none;
+    }
+}
+
+/* =======================
+DASHBOARD OVERVIEW=========
+==========================*/
+
+.dashboardContainer h1 {
+    font-size: 20px;
+    color: var(--text-col);
+    font-weight: 600;
+}
+
+.holders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.holders .docholder {
+    background: var(--nav-col);
+    border-radius: 16px;
+    padding: 18px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border: 1px solid rgba(31, 138, 205, 0.15);
+    transition: all 0.35s ease;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.holders .docholder:hover {
+    transform: translateY(-4px);
+    border-color: var(--hover-color);
+}
+
+.docholder .info p {
+    font-size: 14px;
+    color: #777;
+}
+
+.docholder .info h3 {
+    font-size: 22px;
+    color: var(--text-col);
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.docholder .icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: rgba(31, 138, 205, 0.1);
+    color: var(--hover-color);
+}
+
+
+.docholder.doctors .icon {
+    background: rgba(46, 204, 113, 0.15);
+    color: var(--success);
+}
+
+.docholder.appointments .icon {
+    background: rgba(31, 138, 205, 0.15);
+    color: var(--hover-color);
+}
+
+.docholder.earnings .icon {
+    background: rgba(243, 156, 18, 0.15);
+    color: var(--warning);
+}
+
+.docholder.pending-doctors .icon,
+.docholder.pending-hospitals .icon {
+    background: rgba(231, 76, 60, 0.15);
+    color: var(--danger);
+}
+
+@media (max-width: 850px) {
+    .holders {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+}
+
+@media (max-width: 550px) {
+    .holders {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .docholder .info p {
+        font-size: 12px;
+    }
+
+    .docholder .info h3 {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .docholder .icon {
+        height: 30px;
+        width: 30px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 300px) {
+    .holders {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 8px;
+    }
+}
+
+/* ========================
+RECENT APPOINTMENTS TABLE
+======================== */
+.recentAppoint {
+    background: #ffffff;
+    /* padding: 20px; */
+    border-radius: 12px;
+    margin-top: 60px;
+}
+
+.recentAppoint h1 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: var(--text-col);
+    overflow-x: auto;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.modernTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.modernTable thead {
+    /* background: #f8fafc; */
+    background: var(--hover-color);
+}
+
+.modernTable th {
+    text-align: left;
+    padding: 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--nav-col);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modernTable td {
+    padding: 14px;
+    font-size: 14px;
+    color: #374151;
+    border-bottom: 1px solid #f1f5f9;
+    white-space: nowrap;
+}
+
+.modernTable,
+.modernTable td,
+.modernTable th {
+    overflow: visible;
+}
+
+
+.modernTable tbody tr:hover {
+    background: #f9fafb;
+}
+
+.status {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.status.approved {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.status.pending {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.status.cancelled {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.modernTable td:last-child {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* ============================
+MESSAGE ALL USER===========
+===============================*/
+
+.messageAllHospital .btn,
+.messageDocBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.messageAllHospital .btn button,
+.messageDocBtn button {
+    /* width: 100%; */
+    padding: 10px;
+    background: var(--hover-color);
+    color: var(--WHITE);
+    border: none;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    /* margin-top: 10px; */
+}
+
+.messageAllHospital .btn button:hover,
+.messageDocBtn button:hover {
+    background: #176fa6;
+}
+
+/* ==============overlay======== */
+.overlays,
+.overlay,
+.editModel,
+.messageHospitalModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.778);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.overlays.active,
+.overlay.active,
+.editModel.active,
+.messageHospitalModal.active {
+    display: flex;
+}
+
+.formholder {
+    background: #fff;
+    width: 650px;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    animation: slideUp .35s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.formHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.formHeader h2 {
+    font-size: 22px;
+}
+
+.closeForm {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+.formGroup input,
+.formGroup textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    border-color: var(--hover-color);
+    box-shadow: 0 0 0 4px rgba(31, 138, 205, 0.15);
+}
+
+.formGroup textarea {
+    resize: none;
+    height: 90px;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #4e8ecb, #2b6cb0);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (max-width: 550px) {
+    .formholder {
+        width: 100%;
+        border-radius: 0;
+        height: 100vh;
+        padding-top: 50px;
+    }
+
+    .formGroup textarea {
+        height: 250px;
+    }
+}
+
+
+.hospitalTable {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+}
+
+.hospitalTable h1 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #1f2937;
+}
+
+
+.hospitalTableWrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ==========================
+MODERN TABLE
+========================== */
+.hospitalModernTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.hospitalModernTable thead {
+    background: var(--hover-color);
+}
+
+.hospitalModernTable thead th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--nav-col);
+    text-transform: uppercase;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.hospitalModernTable tbody tr {
+    transition: background 0.2s ease;
+}
+
+.hospitalModernTable tbody tr:hover {
+    background: #f9fafb;
+}
+
+.hospitalModernTable tbody td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.hospitalStatus {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.hospitalStatus.approved {
+    background: #e6f6ee;
+    color: #0f766e;
+}
+
+.hospitalStatus.pending {
+    background: #fff7ed;
+    color: #b45309;
+}
+
+.hospitalStatus.suspended {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.hospitalActionCell {
+    position: relative;
+    text-align: right;
+}
+
+.hospitalActionTrigger {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.hospitalActionTrigger:hover {
+    background: #f1f5f9;
+}
+
+.hospitalActionTrigger i {
+    font-size: 20px;
+    color: #475569;
+}
+
+.hospitalActionMenu {
+    position: absolute;
+    top: 38px;
+    right: 0;
+    width: 210px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+    padding: 6px 0;
+    display: none;
+    z-index: 2000;
+}
+
+.hospitalActionMenu.active {
+    display: block;
+}
+
+/* ==========================
+ACTION ITEMS
+========================== */
+.hospitalActionItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.hospitalActionItem i {
+    font-size: 18px;
+    color: #1f8acd;
+}
+
+.hospitalActionItem p {
+    font-size: 14px;
+    margin: 0;
+    color: #374151;
+}
+
+.hospitalActionItem:hover {
+    background: #f8fafc;
+}
+
+/* DANGER */
+.hospitalActionItem.danger i,
+.hospitalActionItem.danger p {
+    color: #dc2626;
+}
+
+.hospitalActionItem.danger:hover {
+    background: #fff1f2;
+}
+
+/* ==========================
+UNAPPROVED HOSPITAL PAGE
+=============================*/
+.searchHospital {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.searchHospital input {
+    width: 40%;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    width: 260px;
+    transition: 0.3s ease;
+    color: var(--text-col);
+}
+
+.searchHospital input:focus {
+    outline: none;
+    border-color: var(--hover-color);
+    box-shadow: 0 0 0 3px rgba(31, 138, 205, 0.15);
+}
+
+.docStatus {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.docStatus {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.action .act {
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--nav-col);
+    background: #059669;
+}
+
+.action .approve {
+    background: #166534;
+
+}
+
+.action .trash {
+    background: #bf3737;
+}
+
+.action .reject {
+    background: #a60909;
+}
+
+@media (max-width: 450px) {
+    .searchHospital input {
+        width: 100%;
+    }
+
+    .recentAppoint {
+        padding: 0;
+    }
+}
+
+/* ===========================
+   DOCTOR FILTER BAR
+=========================== */
+.doctorFilters {
+    margin: 25px 0 15px;
+    padding: 18px;
+    background: #ffffff;
+    border-radius: 14px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.filterGroup {
+    position: relative;
+}
+
+.filterGroup input,
+.filterGroup select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+    color: #374151;
+}
+
+.filterGroup input::placeholder {
+    color: #9ca3af;
+}
+
+.filterGroup select {
+    cursor: pointer;
+}
+
+.filterGroup input:focus,
+.filterGroup select:focus {
+    border-color: var(--hover-color);
+    box-shadow: 0 0 0 4px rgba(31, 138, 205, 0.15);
+}
+
+/* Search icon */
+.filterGroup.search i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 18px;
+}
+
+.filterGroup.search input {
+    padding-left: 40px;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 900px) {
+    .doctorFilters {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .doctorFilters {
+        grid-template-columns: 1fr;
+    }
+}
